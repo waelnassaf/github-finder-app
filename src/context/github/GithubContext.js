@@ -10,7 +10,10 @@ export const GithubProvider = ({ children }) => {
         loading: false,
     }
     const [state, dispatch] = useReducer(githubReducer, initialState)
+
+    //Get Initial Users (Testing...)
     const fetchUsers = async () => {
+        setLoading()
         const response = await fetch(`${GITHUB_URL}/users`)
         const data = await response.json()
         dispatch({
@@ -19,6 +22,11 @@ export const GithubProvider = ({ children }) => {
         })
     }
 
+    //Set Loading
+    const setLoading = () =>
+        dispatch({
+            type: "SET_LOADING",
+        })
     return (
         <GithubContext.Provider
             value={{
