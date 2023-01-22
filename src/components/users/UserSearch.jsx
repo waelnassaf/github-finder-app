@@ -1,4 +1,4 @@
-import { useState, useContext } from "react"
+import { useState, useContext, useRef, useEffect } from "react"
 import GithubContext from "../../context/github/GithubContext"
 import AlertContext from "../../context/alert/AlertContext"
 
@@ -19,6 +19,11 @@ const UserSearch = () => {
             setText("")
         }
     }
+    const searchRef = useRef()
+    useEffect(() => {
+        searchRef.current.focus()
+    }, [])
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 mb-8 gap-8">
             <div>
@@ -31,6 +36,7 @@ const UserSearch = () => {
                                 placeholder="Search..."
                                 value={text}
                                 onChange={handleChange}
+                                ref={searchRef}
                             />
                             <button
                                 className="btn btn-lg absolute top-0 right-0 rounded-l-none w-36"
