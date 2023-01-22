@@ -2,14 +2,18 @@ import { FaCodepen, FaStore, FaUserFriends, FaUsers } from "react-icons/fa"
 import { useEffect, useContext } from "react"
 import { useParams, Link } from "react-router-dom"
 import Spinner from "../components/layout/Spinner"
+import ReposList from "../components/repos/ReposList"
 import GithubContext from "../context/github/GithubContext"
 
 const User = () => {
-    const { getUser, user, loading } = useContext(GithubContext)
+    const { getUser, user, loading, getUserRepos, repos } =
+        useContext(GithubContext)
     const params = useParams()
 
     useEffect(() => {
         getUser(params.login)
+        getUserRepos(params.login)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const {
@@ -42,7 +46,7 @@ const User = () => {
                     <div className="custom-card-image mb-6 md:mb-0">
                         <div className="rounded-lg shadow-xl card image-full">
                             <figure>
-                                <img src={avatar_url} alt="Profile Picture" />
+                                <img src={avatar_url} alt="Profile" />
                             </figure>
                             <div className="card-body justify-end">
                                 <h2 className="card-title mb-0">{name}</h2>
@@ -159,6 +163,7 @@ const User = () => {
                         </div>
                     </div>
                 </div>
+                <ReposList repos={repos} />
             </div>
         </>
     )
